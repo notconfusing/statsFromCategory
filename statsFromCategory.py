@@ -36,7 +36,6 @@ def monthify(verHist):
     editsByMonth = dictZeroer({})
     for ver in verHist:
         timestamp = ver[1]
-        print timestamp
         #convert into month
         year = int(timestamp[:4]) - 2001
         month = int(timestamp[5:7])
@@ -53,7 +52,7 @@ def Rstr(ls):
     return returnstr
 
 def RdataFrameify(editsByMonth):
-    editsByMonthFile = open(+str(category)+' edits By Month.txt', 'w+')
+    editsByMonthFile = open(str(category)+' edits By Month.txt', 'w+')
     #write header
     editsByMonthFile.write('MonthsSinceJan2001 ')
     editsByMonthFile.write(Rstr(editsByMonth.keys()) + '\n')
@@ -69,18 +68,19 @@ def RdataFrameify(editsByMonth):
         editsByMonthFile.write('\n')
     editsByMonthFile.close
     #Copy for automation
-    shutil.copy2(+str(category)+' edits By Month.txt', 'forR.txt')
+    shutil.copy2(str(category)+' edits By Month.txt', 'forR.txt')
         
     
     
 
 for page in catList:
+        print 'working...'
         verHist = wikipedia.Page(enwp,page).getVersionHistory(forceReload=False, reverseOrder=False,
                           getAll=True, revCount=500)
         editsByMonthFrame[page] = monthify(verHist)
 
 
 RdataFrameify(editsByMonthFrame)
-print "Finished. Outputted file +str(category)+' edits By Month.txt"
+print 'Finished. Something for you to eyeball: '+ str(category)+' edits By Month.txt"'
         
         
