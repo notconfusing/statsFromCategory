@@ -1,6 +1,7 @@
 ==To run this script you'll need==
 *python 2.7 and pywikipediabot.
 *R (I'm using 2.14)
+*the category_customized.py class so you don't write the category you get to wikipedia accdientally
 
 
 ==Possible bug in pywikipediabot==

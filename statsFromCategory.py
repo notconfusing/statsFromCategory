@@ -1,5 +1,5 @@
 import wikipedia
-from category import CategoryListifyRobot
+from category_customized import CategoryListifyRobot
 import datetime
 import shutil
 
@@ -15,13 +15,12 @@ enwp = wikipedia.Site('en', 'wikipedia')
 
 category = 'Black feminism books'
 
-
-#catList = CategoryListifyRobot(category, category, '',subCats = False).run()
-#catList = catList.split('\n')[:-1]
+catList = CategoryListifyRobot(category, category, '',subCats = False).run()
+catList = catList.split('\n')[:-1]#removing the end value for some reason it's included
 
 
 #manual entry
-catList = ('The Hunger Games','Steve Jobs (book)', 'Fifty Shades of Grey', 'A Game of Thrones', 'The Help', 'Thinking, Fast and Slow', "Quiet: The Power of Introverts in a World That Can't Stop Talking")
+#catList = ('The Hunger Games','Steve Jobs (book)', 'Fifty Shades of Grey', 'A Game of Thrones', 'The Help', 'Thinking, Fast and Slow', "Quiet: The Power of Introverts in a World That Can't Stop Talking")
 
 #helpers
 def dictZeroer(dct):
@@ -68,7 +67,7 @@ def RdataFrameify(editsByMonth):
         editsByMonthFile.write('\n')
     editsByMonthFile.close
     #Copy for automation
-    shutil.copy2(str(category)+' edits By Month.txt', 'forR.txt')
+    shutil.copy(str(category)+' edits By Month.txt', 'forR.txt')
         
     
     
@@ -81,6 +80,6 @@ for page in catList:
 
 
 RdataFrameify(editsByMonthFrame)
-print 'Finished. Something for you to eyeball: '+ str(category)+' edits By Month.txt"'
+print 'Finished. Something for you to eyeball: "'+ str(category)+' edits By Month.txt"'
         
         
