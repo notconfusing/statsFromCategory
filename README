@@ -1,0 +1,19 @@
+==To run this script you'll need==
+*python 2.7 and pywikipediabot.
+*R (I'm using 2.14)
+
+
+==Possible bug in pywikipediabot==
+If things dont work, change the line in pywikipediabot in wikipedia.py from:
+
+            if 'query-continue' in result and getAll:
+                params['rvstartid'] = result['query-continue']['revisions']['rvstartid']
+
+to 
+
+            if 'query-continue' in result and getAll:
+                params['rvstartid'] = result['query-continue']['revisions']['rvcontinue']
+
+==Todo==
+*Create a shell script that runs this two scripts in succession.
+*Increase the temporal resolution from the month level. 
