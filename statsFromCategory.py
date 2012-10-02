@@ -13,7 +13,7 @@ nowMonthsSinceJan2001 = ((now.year - 2001)*12) + now.month
 
 enwp = wikipedia.Site('en', 'wikipedia')
 
-category = 'Novels by Irvine Welsh'
+category = 'Black feminism books'
 
 
 #catList = CategoryListifyRobot(category, category, '',subCats = False).run()
@@ -53,7 +53,7 @@ def Rstr(ls):
     return returnstr
 
 def RdataFrameify(editsByMonth):
-    editsByMonthFile = open('../categoryStats/'+str(category)+' edits By Month.txt', 'w+')
+    editsByMonthFile = open(+str(category)+' edits By Month.txt', 'w+')
     #write header
     editsByMonthFile.write('MonthsSinceJan2001 ')
     editsByMonthFile.write(Rstr(editsByMonth.keys()) + '\n')
@@ -69,7 +69,7 @@ def RdataFrameify(editsByMonth):
         editsByMonthFile.write('\n')
     editsByMonthFile.close
     #Copy for automation
-    shutil.copy2('../categoryStats/'+str(category)+' edits By Month.txt', '../categoryStats/forR.txt')
+    shutil.copy2(+str(category)+' edits By Month.txt', 'forR.txt')
         
     
     
@@ -81,5 +81,6 @@ for page in catList:
 
 
 RdataFrameify(editsByMonthFrame)
+print "Finished. Outputted file +str(category)+' edits By Month.txt"
         
         
