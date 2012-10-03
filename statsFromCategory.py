@@ -3,7 +3,8 @@ from category_customized import CategoryListifyRobot
 import datetime
 import shutil
 
-
+#mode list or category change to declare
+categoryNotList = False
 
 #setup
 editsByMonthFrame = {}
@@ -13,15 +14,14 @@ nowMonthsSinceJan2001 = ((now.year - 2001)*12) + now.month
 
 enwp = wikipedia.Site('en', 'wikipedia')
 
-category = 'Black feminism books'
-
-catList = CategoryListifyRobot(category, category, '',subCats = False).run()
-catList = catList.split('\n')[:-1]#removing the end value for some reason it's included
-
-
-#manual entry
-#catList = ('The Hunger Games','Steve Jobs (book)', 'Fifty Shades of Grey', 'A Game of Thrones', 'The Help', 'Thinking, Fast and Slow', "Quiet: The Power of Introverts in a World That Can't Stop Talking")
-
+if categoryNotList: #use the categoryListifyRobot
+    category = 'Pulitzer Prize winners'
+    catList = CategoryListifyRobot(category, category, '',subCats = False).run()
+    catList = catList.split('\n')[:-1]#removing the end value for some reason it's included
+else: #manual entry
+    category = "Manual list"
+    catList = ('Barack Obama', 'Mitt Romney')
+#'Barack Obama', 'Mitt Romney', 'Al Gore', 'George W. Bush', 'John Kerry', 'John McCain'
 #helpers
 def dictZeroer(dct):
     for i in range(0,nowMonthsSinceJan2001+1):
@@ -50,11 +50,21 @@ def Rstr(ls):
         returnstr += l+' '
     return returnstr
 
+def removeSpecialChars(listOfCats):
+    """Removes special chars that are in Wikipedia article titles which R cannot allow as variable names. And eliminates spaces."""
+    returnstr = ''
+    for cat in listOfCats:
+        cat = str(cat)
+        cat = cat.translate(None, "',.():")
+        cat = cat.replace(' ', '_')
+        returnstr += cat+' '
+    return returnstr
 def RdataFrameify(editsByMonth):
-    editsByMonthFile = open(str(category)+' edits By Month.txt', 'w+')
+    editsByMonthFile = open(str(category)+'.txt', 'w+')
     #write header
     editsByMonthFile.write('MonthsSinceJan2001 ')
-    editsByMonthFile.write(Rstr(editsByMonth.keys()) + '\n')
+    articleTitles = removeSpecialChars(editsByMonth.keys())
+    editsByMonthFile.write(articleTitles + '\n')
     #write values acrosswise
     for i in range(0,nowMonthsSinceJan2001):
         editsByMonthFile.write(str(i)+' ')
@@ -65,9 +75,7 @@ def RdataFrameify(editsByMonth):
         row.rstrip()
         editsByMonthFile.write(row)
         editsByMonthFile.write('\n')
-    editsByMonthFile.close
-    #Copy for automation
-    shutil.copy(str(category)+' edits By Month.txt', 'forR.txt')
+    editsByMonthFile.close()
         
     
     
@@ -80,6 +88,7 @@ for page in catList:
 
 
 RdataFrameify(editsByMonthFrame)
-print 'Finished. Something for you to eyeball: "'+ str(category)+' edits By Month.txt"'
+shutil.copy(str(category)+'.txt', 'forR.txt') #copy to make our forR.txt file
+print 'Finished. Something for you to eyeball: "'+ str(category)+'.txt"'
         
         
